@@ -11,6 +11,7 @@ call vim_lib#sys#Autoload#init('~/.vim', 'bundle')
 
 Plugin 'vim_lib'
 Plugin 'vim_plugmanager'
+Plugin 'vim_prj'
 
 filetype indent plugin on
 
