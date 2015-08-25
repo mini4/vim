@@ -11,8 +11,12 @@ VIM_TARGET="${TARGET}/.vim"
 [[ ( ! -L "${VIM}" || "$(readlink ${VIM})" != "${VIM_TARGET}" ) && -d "${VIM}" ]] && mv "${VIM}" "${HOME}/.viM"
 [[ -L "${VIM}" ]] || ln -s "${VIM_TARGET}" "${VIM}"
 
-for PLUGIN in "vim_lib" "vim_plugmanager" "vim_prj" 
+for PLUGIN in "mini4/vim_lib" "mini4/vim_plugmanager"
 do
-  VIM_PLUGIN="${VIM}/bundle/${PLUGIN}"
-  [[ -d "${VIM_PLUGIN}" ]] || git clone "https://github.com/Bashka/${PLUGIN}.git" "$VIM_PLUGIN"
+  IFS='/' read -ra ARR <<< "${PLUGIN}"
+  PLUGIN_OWNER="${ARR[0]}"
+  PLUGIN_NAME="${ARR[1]}"
+  PLUGIN_PATH="${VIM}/bundle/${PLUGIN_NAME}"
+  [[ -d "${PLUGIN_PATH}" ]] || git clone "https://github.com/${PLUGIN}.git" "${PLUGIN_PATH}"
 done
+
