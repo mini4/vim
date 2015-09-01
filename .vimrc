@@ -9,9 +9,10 @@ filetype off
 set rtp=~/.vim/bundle/vim_lib
 call vim_lib#sys#Autoload#init('~/.vim', 'bundle')
 
-Plugin 'vim_lib'
-Plugin 'vim_plugmanager'
-Plugin 'vim_prj'
+so .vim/plugins.vim
 
 filetype indent plugin on
 
+map <F3> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\~$', '\.swp$', '\.pyc$', '\.pyo$']

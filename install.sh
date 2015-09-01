@@ -13,7 +13,7 @@ PATH_BUNDLE="${VIM_TARGET}/bundle"
 [[ ( ! -L "${VIM}" || "$(readlink ${VIM})" != "${VIM_TARGET}" ) && -d "${VIM}" ]] && mv "${VIM}" "${HOME}/.viM"
 [[ -L "${VIM}" ]] || ln -s "${VIM_TARGET}" "${VIM}"
 
-for PLUGIN in "mini4/vim_lib" "mini4/vim_plugmanager"
+for PLUGIN in "mini4/vim_lib" "mini4/vim_plugmanager" "scrooloose/nerdtree"
 do
   IFS='/' read -ra ARR <<< "${PLUGIN}"
   PLUGIN_OWNER="${ARR[0]}"
