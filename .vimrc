@@ -9,7 +9,7 @@ filetype off
 set rtp=~/.vim/bundle/vim_lib
 call vim_lib#sys#Autoload#init('~/.vim', 'bundle')
 
-so .vim/plugins.vim
+source ~/.vim/plugins.vim
 
 filetype indent plugin on
 
