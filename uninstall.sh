@@ -10,4 +10,3 @@ VIMRC_OLD="${HOME}/.viMrc"
 VIM_OLD="${HOME}/.viM"
 [[ -L "${VIM}" && "$(readlink ${VIM})" == "${TARGET}/.vim" ]] && unlink "${VIM}"
 [[ -d "${VIM_OLD}" ]] && mv "${VIM_OLD}" "${VIM}"
-

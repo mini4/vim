@@ -13,6 +13,8 @@ PATH_BUNDLE="${VIM_TARGET}/bundle"
 [[ ( ! -L "${VIM}" || "$(readlink ${VIM})" != "${VIM_TARGET}" ) && -d "${VIM}" ]] && mv "${VIM}" "${HOME}/.viM"
 [[ -L "${VIM}" ]] || ln -s "${VIM_TARGET}" "${VIM}"
 
+PLUGINS_LIST="${VIM}/plugins.vim"
+[[ -f "${PLUGINS_LIST}" ]] && rm -f "${PLUGINS_LIST}"
 for PLUGIN in "mini4/vim_lib" "mini4/vim_plugmanager" "scrooloose/nerdtree"
 do
   IFS='/' read -ra ARR <<< "${PLUGIN}"
@@ -20,5 +22,5 @@ do
   PLUGIN_NAME="${ARR[1]}"
   PLUGIN_PATH="${VIM}/bundle/${PLUGIN_NAME}"
   [[ -d "${PLUGIN_PATH}" ]] || git clone "https://github.com/${PLUGIN}.git" "${PLUGIN_PATH}"
+  echo "Plugin '${PLUGIN}'" >> "${PLUGINS_LIST}"
 done
-
