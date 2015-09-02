@@ -1,9 +1,15 @@
+set enc=utf-8      " кодировка по дефолу в файлах
+
 set number
 set relativenumber
+
+set ls=2           " всегда показывать статусбар
 
 set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
+set incsearch      " инкреминтируемый поиск
+set hlsearch       " подсветка результатов поиска
 
 filetype off
 set rtp=~/.vim/bundle/vim_lib
