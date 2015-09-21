@@ -11,6 +11,10 @@ set imsearch=0
 set incsearch      " инкреминтируемый поиск
 set hlsearch       " подсветка результатов поиска
 
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
 filetype off
 set rtp=~/.vim/bundle/vim_lib
 call vim_lib#sys#Autoload#init('~/.vim', 'bundle')
