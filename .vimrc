@@ -25,4 +25,9 @@ filetype indent plugin on
 
 map <F3> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
-let NERDTreeIgnore=['\~$', '\.swp$', '\.pyc$', '\.pyo$']
+let NERDTreeIgnore=['\~$', '\.swp$', '\.pyc$', '\.pyo$', '\.orig$']
+
+augroup vimrc_hooks
+    au!
+    au BufWritePost .vimrc so $MYVIMRC
+augroup END
