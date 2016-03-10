@@ -5,7 +5,8 @@ set relativenumber
 
 set ls=2           " всегда показывать статусбар
 
-"set keymap=russian-jcukenwin
+" переключение между языками Ctrl+^
+" set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
 set incsearch      " инкреминтируемый поиск
@@ -16,9 +17,9 @@ set tabstop=4      " размер табуляций
 set smarttab
 set expandtab
 
-set foldenable     " вкл фолдинг (сворачивание участков кода)
-set foldmethod=syntax     " сворачивание по отступам     
-set foldopen=all   " автоматическое открытие сверток при заходе в них
+"set foldenable     " вкл фолдинг (сворачивание участков кода)
+"set foldmethod=syntax     " сворачивание по отступам     
+"set foldopen=all   " автоматическое открытие сверток при заходе в них
 
 set autochdir      " автоматическое переключение рабочей папки
 
@@ -48,9 +49,9 @@ endfunction
 autocmd BufNewFile *.py call BufNewFile_PY()
 
 " автоматическое закрытие скобок
-imap [ []<LEFT>
-imap ( ()<LEFT>
-imap { {}<LEFT>
+"imap [ []<LEFT>
+"imap ( ()<LEFT>
+"imap { {}<LEFT>
 
 " размеры окна
 "set lines=100
@@ -58,3 +59,8 @@ imap { {}<LEFT>
 
 "map <leader>r :NERDTreeFind<cr> " поиск текущего буфера файла в дереве
 "autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif " автопоиск
+
+"call pathogen#infect()
+nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
+
+"let g:jedi#popup_select_first=0
