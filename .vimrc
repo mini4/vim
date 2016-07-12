@@ -1,66 +1,148 @@
-set enc=utf-8      " кодировка по дефолу в файлах
+set nocompatible
+execute pathogen#infect()
 
-set number
-set relativenumber
+syntax on
+filetype plugin indent on
 
-set ls=2           " всегда показывать статусбар
 
-" переключение между языками Ctrl+^
-" set keymap=russian-jcukenwin
-set iminsert=0
-set imsearch=0
-set incsearch      " инкреминтируемый поиск
-set hlsearch       " подсветка результатов поиска
+let mapleader=','
 
-set shiftwidth=4   " размер отступов
-set tabstop=4      " размер табуляций
-set smarttab
+nnoremap <leader>ev :vsplit $MYVIMRC<cr> " Edit my Vimrc file
+nnoremap <leader>sv :source $MYVIMRC<cr> " Source my Vimrc file
+
+set number relativenumber numberwidth=5
+"highlight LineNr ctermfg=grey
+"highlight CursorLineNr ctermfg=grey
+set hlsearch
+
+set tabstop=4         " отображение таба 4 пробелами
+set softtabstop=4     " замена табов пробелами в режиме вставки
+set shiftwidth=4      " сдвиг (>>) на 4 символа
+set textwidth=99      " ширина строки
+set smarttab          " добавление/удаление отступов на ширину таба
+set autoindent        " копирует отступы предыдущей строки
 set expandtab
+set fileformat=unix
 
-"set foldenable     " вкл фолдинг (сворачивание участков кода)
-"set foldmethod=syntax     " сворачивание по отступам     
-"set foldopen=all   " автоматическое открытие сверток при заходе в них
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
-set autochdir      " автоматическое переключение рабочей папки
+let g:airline_powerline_fonts=1
 
-filetype off
-set rtp=~/.vim/bundle/vim_lib
-call vim_lib#sys#Autoload#init('~/.vim', 'bundle')
 
-source ~/.vim/plugins.vim
-
-filetype indent plugin on
-
-map <F3> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
-let NERDTreeIgnore=['\~$', '\.swp$', '\.pyc$', '\.pyo$', '\.orig$']
+let NERDTreeIgnore=['\~$', '\.swp$', '\.pyc$', '\.pyo$', '\.orig$', '\.rej$']
 
-augroup vimrc_hooks
-    au!
-    au BufWritePost .vimrc so $MYVIMRC
-augroup END
+nnoremap <F3> :NERDTreeToggle<CR>
+vnoremap <F3> :NERDTreeToggle<CR>
+inoremap <F3> <esc>:NERDTreeToggle<CR>
 
-function! BufNewFile_PY()
-    0put = '#-*- coding: utf-8 -*-'
-    $put =
-    normal G
+nnoremap <leader>r :NERDTreeFind<CR>
+vnoremap <leader>r :NERDTreeFind<CR>
+inoremap <leader>r <esc>:NERDTreeFind<CR>
+
+
+""" Fuzzy finder
+let g:ctrlp_custom_ignore = {
+    \ 'file': '\v\.(pyc|pyo|orig|sh|rej)$',
+    \ 'dir': '\v(develop-eggs|data|mail|node_modules|bin|parts)$',
+    \ }
+
+
+""" http://vim.wikia.com/wiki/Go_away_and_come_back
+" Creates a session
+function! MakeSession()
+  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+  if (filewritable(b:sessiondir) != 2)
+    exe 'silent !mkdir -p ' . b:sessiondir
+    redraw!
+  endif
+  let b:sessionfile = b:sessiondir .'/session.vim'
+  exe "mksession! " . b:sessionfile
+  echo "creating session"
 endfunction
 
-autocmd BufNewFile *.py call BufNewFile_PY()
+" Updates a session, BUT ONLY IF IT ALREADY EXISTS
+function! UpdateSession()
+  let b:sessiondir = $HOME . "/.vim/sessions" .getcwd()
+  let b:sessionfile = b:sessiondir . "session.vim"
+  if (filereadable(b:sessionfile))
+    exe "mksession! " . b:sessionfile
+    echo "updating session"
+  endif
+endfunction
 
-" автоматическое закрытие скобок
-"imap [ []<LEFT>
-"imap ( ()<LEFT>
-"imap { {}<LEFT>
+" Loads a session if it exists
+function! LoadSession()
+  if argc() == 0
+    let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+    let b:sessionfile = b:sessiondir . "/session.vim"
+    if (filereadable(b:sessionfile))
+      exe 'source ' . b:sessionfile
+    else
+      echo "No session loaded."
+    endif
+  else
+    let b:sessionfile = ""
+    let b:sessiondir = ""
+  endif
+endfunction
 
-" размеры окна
-"set lines=100
-"set columns=150
+let g:session_directory = $HOME . "/.vim/sessions/" . getcwd()
+let g:session_default_name = 'session'
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
+let g:session_lock_enabled = 0
+"if (filewritable(g:session_directory) != 2)
+"  exe 'silent !mkdir -p ' . g:session_directory
+"  redraw!
+"endif
+"au VimEnter * nested :call LoadSession()
+"au VimLeave * :call UpdateSession()
+"map <leader>m :call MakeSession()<CR>
 
-"map <leader>r :NERDTreeFind<cr> " поиск текущего буфера файла в дереве
-"autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif " автопоиск
+au BufNewFile,BufRead *.mako set filetype=mako
+"au FileType python noremap <leader>b Oimport<space>pdb;pdb.set_trace()<esc>:w<cr>
 
-"call pathogen#infect()
-nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
 
-"let g:jedi#popup_select_first=0
+
+" Indent Python in the Google way.
+
+setlocal indentexpr=GetGooglePythonIndent(v:lnum)
+
+let s:maxoff = 50 " maximum number of lines to look backwards.
+
+function! GetGooglePythonIndent(lnum)
+
+  " Indent inside parens.
+  " Align with the open paren unless it is at the end of the line.
+  " E.g.
+  "   open_paren_not_at_EOL(100,
+  "                         (200,
+  "                          300),
+  "                         400)
+  "   open_paren_at_EOL(
+  "       100, 200, 300, 400)
+  call cursor(a:lnum, 1)
+  let [par_line, par_col] = searchpairpos('(\|{\|\[', '', ')\|}\|\]', 'bW',
+        \ "line('.') < " . (a:lnum - s:maxoff) . " ? dummy :"
+        \ . " synIDattr(synID(line('.'), col('.'), 1), 'name')"
+        \ . " =~ '\\(Comment\\|String\\)$'")
+  if par_line > 0
+    call cursor(par_line, 1)
+    if par_col != col("$") - 1
+      return par_col
+    esle
+        return indent(par_line) + &sw
+    endif
+  endif
+                                            
+  " Delegate the rest to the original function.
+  return GetPythonIndent(a:lnum)
+                                            
+endfunction
+                                                
+let pyindent_nested_paren="&sw"
+let pyindent_open_paren="&sw"
