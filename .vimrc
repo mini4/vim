@@ -1,5 +1,27 @@
 set nocompatible
-execute pathogen#infect()
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'tpope/vim-sensible'
+Plugin 'kien/ctrlp.vim' " Fuzzy file
+Plugin 'scrooloose/nerdtree'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
+
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+
+call vundle#end()
 
 syntax on
 filetype plugin indent on
@@ -11,8 +33,6 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr> " Edit my Vimrc file
 nnoremap <leader>sv :source $MYVIMRC<cr> " Source my Vimrc file
 
 set number relativenumber numberwidth=5
-"highlight LineNr ctermfg=grey
-"highlight CursorLineNr ctermfg=grey
 set hlsearch
 
 set tabstop=4         " отображение таба 4 пробелами
@@ -51,60 +71,13 @@ let g:ctrlp_custom_ignore = {
     \ }
 
 
-""" http://vim.wikia.com/wiki/Go_away_and_come_back
-" Creates a session
-function! MakeSession()
-  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
-  if (filewritable(b:sessiondir) != 2)
-    exe 'silent !mkdir -p ' . b:sessiondir
-    redraw!
-  endif
-  let b:sessionfile = b:sessiondir .'/session.vim'
-  exe "mksession! " . b:sessionfile
-  echo "creating session"
-endfunction
-
-" Updates a session, BUT ONLY IF IT ALREADY EXISTS
-function! UpdateSession()
-  let b:sessiondir = $HOME . "/.vim/sessions" .getcwd()
-  let b:sessionfile = b:sessiondir . "session.vim"
-  if (filereadable(b:sessionfile))
-    exe "mksession! " . b:sessionfile
-    echo "updating session"
-  endif
-endfunction
-
-" Loads a session if it exists
-function! LoadSession()
-  if argc() == 0
-    let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
-    let b:sessionfile = b:sessiondir . "/session.vim"
-    if (filereadable(b:sessionfile))
-      exe 'source ' . b:sessionfile
-    else
-      echo "No session loaded."
-    endif
-  else
-    let b:sessionfile = ""
-    let b:sessiondir = ""
-  endif
-endfunction
-
 let g:session_directory = $HOME . "/.vim/sessions/" . getcwd()
 let g:session_default_name = 'session'
-let g:session_autosave = 'yes'
+"let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 let g:session_lock_enabled = 0
-"if (filewritable(g:session_directory) != 2)
-"  exe 'silent !mkdir -p ' . g:session_directory
-"  redraw!
-"endif
-"au VimEnter * nested :call LoadSession()
-"au VimLeave * :call UpdateSession()
-"map <leader>m :call MakeSession()<CR>
 
 au BufNewFile,BufRead *.mako set filetype=mako
-"au FileType python noremap <leader>b Oimport<space>pdb;pdb.set_trace()<esc>:w<cr>
 
 
 
