@@ -1,3 +1,9 @@
+if exists('g:loaded_vimrc')
+    finish
+endif
+let g:loaded_vimrc = 1
+
+
 set nocompatible
 filetype off
 
@@ -73,7 +79,7 @@ let g:ctrlp_custom_ignore = {
 
 let g:session_directory = $HOME . "/.vim/sessions/" . getcwd()
 let g:session_default_name = 'session'
-let g:session_autosave = 'promt'
+let g:session_autosave = 'no'
 let g:session_autoload = 'yes'
 let g:session_lock_enabled = 0
 
@@ -124,8 +130,6 @@ let pyindent_open_paren="&sw"
 
 " Testing & Debugging
 let s:vimrc = getcwd() . '/.vimrc'
-if getcwd() != $HOME
-    if filereadable(s:vimrc)
-        exe 'so ' . s:vimrc
-    endif
+if filereadable(s:vimrc)
+    exe 'so ' . s:vimrc
 endif
