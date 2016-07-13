@@ -124,6 +124,8 @@ let pyindent_open_paren="&sw"
 
 " Testing & Debugging
 let s:vimrc = getcwd() . '/.vimrc'
-if filereadable(s:vimrc)
-  exe 'so ' . s:vimrc
+if getcwd() != $HOME
+    if filereadable(s:vimrc)
+        exe 'so ' . s:vimrc
+    endif
 endif
