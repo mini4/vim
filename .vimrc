@@ -44,10 +44,10 @@ set autoindent        " копирует отступы предыдущей с�
 set expandtab
 set fileformat=unix
 
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-h> <C-w><C-h>
 
 let g:airline_powerline_fonts=1
 
@@ -55,13 +55,13 @@ let g:airline_powerline_fonts=1
 let NERDTreeShowHidden=1
 let NERDTreeIgnore=['\~$', '\.swp$', '\.pyc$', '\.pyo$', '\.orig$', '\.rej$']
 
-nnoremap <F3> :NERDTreeToggle<CR>
-vnoremap <F3> :NERDTreeToggle<CR>
-inoremap <F3> <esc>:NERDTreeToggle<CR>
+nnoremap <F3> :NERDTreeToggle<cr>
+vnoremap <F3> :NERDTreeToggle<cr>
+inoremap <F3> <esc>:NERDTreeToggle<cr>
 
-nnoremap <leader>r :NERDTreeFind<CR>
-vnoremap <leader>r :NERDTreeFind<CR>
-inoremap <leader>r <esc>:NERDTreeFind<CR>
+nnoremap <leader>r :NERDTreeFind<cr>
+vnoremap <leader>r :NERDTreeFind<cr>
+inoremap <leader>r <esc>:NERDTreeFind<cr>
 
 
 """ Fuzzy finder
@@ -73,7 +73,7 @@ let g:ctrlp_custom_ignore = {
 
 let g:session_directory = $HOME . "/.vim/sessions/" . getcwd()
 let g:session_default_name = 'session'
-"let g:session_autosave = 'yes'
+let g:session_autosave = 'promt'
 let g:session_autoload = 'yes'
 let g:session_lock_enabled = 0
 
@@ -111,11 +111,19 @@ function! GetGooglePythonIndent(lnum)
         return indent(par_line) + &sw
     endif
   endif
-                                            
+
   " Delegate the rest to the original function.
   return GetPythonIndent(a:lnum)
-                                            
+
 endfunction
-                                                
+
 let pyindent_nested_paren="&sw"
 let pyindent_open_paren="&sw"
+
+
+
+" Testing & Debugging
+let s:vimrc = getcwd() . '/.vimrc'
+if filereadable(s:vimrc)
+  exe 'so ' . s:vimrc
+endif
