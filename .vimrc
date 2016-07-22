@@ -77,8 +77,13 @@ let g:ctrlp_custom_ignore = {
     \ }
 
 
+let s:session_name = 'session'
+if exists('g:session_name')
+    let s:session_name = g:session_name
+endif
+
 let g:session_directory = $HOME . "/.vim/sessions/" . getcwd()
-let g:session_default_name = 'session'
+let g:session_default_name = s:session_name
 let g:session_autosave = 'no'
 let g:session_autoload = 'yes'
 let g:session_lock_enabled = 0
