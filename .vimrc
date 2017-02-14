@@ -28,6 +28,8 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 
+Plugin 'vim-scripts/pyte' " colorschema
+
 " Testing
 Plugin 'tristen/vim-sparkup'
 
@@ -56,6 +58,7 @@ set expandtab
 set fileformat=unix
 
 au filetype yaml setl ts=2 sts=2 sw=2
+au filetype hbs setl ts=2 sts=2 sw=2
 au filetype mako setl textwidth=0 ts=2 sts=2 sw=2
 au filetype javascript setl textwidth=0 ts=2 sts=2 sw=2
 
@@ -69,7 +72,7 @@ let g:airline_theme='cool'
 
 
 let NERDTreeShowHidden=1
-let NERDTreeIgnore=['\~$', '\.swp$', '\.pyc$', '\.pyo$', '\.orig$', '\.rej$']
+let NERDTreeIgnore=['\~$', '\.swp$', '\.pyc$', '\.pyo$', '\.orig$']
 
 nnoremap <F3> :NERDTreeToggle<cr>
 vnoremap <F3> :NERDTreeToggle<cr>
@@ -105,9 +108,6 @@ if filereadable(s:vimrc)
     exe 'so ' . s:vimrc
 endif
 
-
-
-" Testing & Debugging
 " Allow to copy/paste between VIM instances
 " "copy the current visual selection to ~/.vbuf
 vmap <Leader>y :w! ~/.vbuf<CR>
@@ -115,3 +115,15 @@ vmap <Leader>y :w! ~/.vbuf<CR>
 nmap <Leader>y :.w! ~/.vbuf<CR>
 " "paste the contents of the buffer file
 nmap <Leader>p :r ~/.vbuf<CR>
+
+" Sparkup settings
+augroup sparkup_ft
+    autocmd!
+    autocmd FileType mako runtime! ftplugin/html/sparkup.vim
+    autocmd FileType htmldjango runtime! ftplugin/html/sparkup.vim
+augroup END
+let g:sparkupDoubleQuote = 1
+
+
+
+" Testing & Debugging
