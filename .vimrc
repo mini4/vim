@@ -32,6 +32,13 @@ Plugin 'vim-scripts/pyte' " colorschema
 
 " Testing
 Plugin 'tristen/vim-sparkup'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'fisadev/vim-isort'
+Plugin 'w0rp/ale'
+Plugin 'Valloric/YouCompleteMe'
+
+Plugin 'mattn/webapi-vim'
+Plugin '7kfpun/pypi.vim'
 
 call vundle#end()
 
@@ -48,19 +55,21 @@ set noswapfile
 set number relativenumber numberwidth=5
 set hlsearch
 
-set tabstop=4         " отображение таба 4 пробелами
-set softtabstop=4     " замена табов пробелами в режиме вставки
-set shiftwidth=4      " сдвиг (>>) на 4 символа
-set textwidth=99      " ширина строки
-set smarttab          " добавление/удаление отступов на ширину таба
-set autoindent        " копирует отступы предыдущей строки
-set expandtab
-set fileformat=unix
+"set tabstop=4         " отображение таба 4 пробелами
+"set softtabstop=4     " замена табов пробелами в режиме вставки
+"set shiftwidth=4      " сдвиг (>>) на 4 символа
+"set textwidth=99      " ширина строки
+"set smarttab          " добавление/удаление отступов на ширину таба
+"set autoindent        " копирует отступы предыдущей строки
+"set expandtab
+"set fileformat=unix
 
-au filetype yaml setl ts=2 sts=2 sw=2
-au filetype hbs setl ts=2 sts=2 sw=2
-au filetype mako setl textwidth=0 ts=2 sts=2 sw=2
-au filetype javascript setl textwidth=0 ts=2 sts=2 sw=2
+"au filetype yaml setl ts=2 sts=2 sw=2
+"au filetype hbs setl ts=2 sts=2 sw=2
+"au filetype mako setl textwidth=0 ts=2 sts=2 sw=2
+"au filetype html setl textwidth=0 ts=2 sts=2 sw=2
+"au filetype javascript setl textwidth=0 ts=2 sts=2 sw=2
+"au filetype less setl textwidth=0 ts=2 sts=2 sw=2
 
 nnoremap <C-j> <C-w><C-j>
 nnoremap <C-k> <C-w><C-k>
@@ -95,7 +104,7 @@ if exists('g:session_name')
     let s:session_name = g:session_name
 endif
 
-let g:session_directory = $HOME . "/.vim/sessions/" . getcwd()
+let g:session_directory = $HOME . "/.vim/sessions" . getcwd()
 let g:session_default_name = s:session_name
 let g:session_autosave = 'no'
 let g:session_autoload = 'yes'
@@ -127,3 +136,4 @@ let g:sparkupDoubleQuote = 1
 
 
 " Testing & Debugging
+"au BufWritePre *.py :%s/\s\+$//e
